@@ -1,6 +1,11 @@
 #ifndef __EVALUATOR_H__
 #define __EVALUATOR_H__
 
+#ifdef  __cplusplus
+extern "C"
+{
+#endif /* __cplusplus */
+
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -75,8 +80,9 @@ void eval_end(const char *title)
 		if (strcmp(title, sect->title) == 0)
 		{
 			clock_gettime(CLOCK_REALTIME, &sect->tms_end);
-			sect->elapsed_time += (sect->tms_end.tv_sec - sect->tms_start.tv_sec);
-			sect->elapsed_time += (sect->tms_end.tv_nsec - sect->tms_start.tv_nsec) / 1000000000.0;
+			double start = sect->tms_start.tv_sec + (sect->tms_start.tv_nsec / 1000000000.0);
+			double end = sect->tms_end.tv_sec + (sect->tms_end.tv_nsec / 1000000000.0);
+			sect->elapsed_time += end - start;
 			section_found = 1;
 			break;
 		}
@@ -101,8 +107,12 @@ void eval_dump()
 		printf("Section title:\t\t%s\n", sect->title);
 		printf("Number of rounds:\t%d\n", sect->num_rounds);
 		printf("Total elapsed time:\t%.9lf second\n", sect->elapsed_time);
-		printf("Average elapsed time:\t%.9lf second\n", sect->elapsed_time / sect->num_rounds);
+		printf("Average time per round:\t%.9lf second\n", sect->elapsed_time / sect->num_rounds);
 	}
 }
+
+#ifdef  __cplusplus
+}
+#endif /* __cplusplus */
 
 #endif /* __EVALUATOR_H__ */
