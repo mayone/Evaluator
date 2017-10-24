@@ -17,7 +17,6 @@ void eval_start(const char *title)
 		sect = &evaluator.sections[i];
 		if (strcmp(title, sect->title) == 0)
 		{
-			sect->num_rounds++;
 			section_found = 1;
 			clock_gettime(CLOCK_REALTIME, &sect->tms_start);
 			break;
@@ -29,7 +28,6 @@ void eval_start(const char *title)
 		i = evaluator.num_sections++;
 		sect = &evaluator.sections[i];
 		strcpy(sect->title, title);
-		sect->num_rounds++;
 		clock_gettime(CLOCK_REALTIME, &sect->tms_start);
 	}
 }
@@ -51,6 +49,7 @@ void eval_end(const char *title)
 			double start = sect->tms_start.tv_sec + (sect->tms_start.tv_nsec / 1000000000.0);
 			double end = sect->tms_end.tv_sec + (sect->tms_end.tv_nsec / 1000000000.0);
 			sect->elapsed_time += end - start;
+			sect->num_rounds++;
 			section_found = 1;
 			break;
 		}
@@ -62,7 +61,7 @@ void eval_end(const char *title)
 	}
 }
 
-void eval_dump()
+void eval_dump(void)
 {
 	int i, n;
 	struct section *sect;
