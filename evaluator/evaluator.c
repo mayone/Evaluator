@@ -7,7 +7,7 @@
 
 struct _evaluator evaluator;
 
-void eval_start(const char *title)
+void eval_begin(const char *title)
 {
 	int i, n, section_found;
 	struct section *sect;
@@ -21,7 +21,7 @@ void eval_start(const char *title)
 		if (strcmp(title, sect->title) == 0)
 		{
 			section_found = 1;
-			clock_gettime(CLOCK_REALTIME, &sect->ts_start);
+			clock_gettime(CLOCK_REALTIME, &sect->ts_begin);
 			break;
 		}
 	}
@@ -31,14 +31,14 @@ void eval_start(const char *title)
 		i = evaluator.num_sections++;
 		sect = &evaluator.sections[i];
 		strcpy(sect->title, title);
-		clock_gettime(CLOCK_REALTIME, &sect->ts_start);
+		clock_gettime(CLOCK_REALTIME, &sect->ts_begin);
 	}
 }
 
 void eval_end(const char *title)
 {
 	int i, n, section_found;
-	double time_start, time_end;
+	double time_begin, time_end;
 	struct section *sect;
 
 	section_found = 0;
@@ -50,9 +50,9 @@ void eval_end(const char *title)
 		if (strcmp(title, sect->title) == 0)
 		{
 			clock_gettime(CLOCK_REALTIME, &sect->ts_end);
-			time_start = sect->ts_start.tv_sec + (sect->ts_start.tv_nsec / 1000000000.0);
+			time_begin = sect->ts_begin.tv_sec + (sect->ts_begin.tv_nsec / 1000000000.0);
 			time_end = sect->ts_end.tv_sec + (sect->ts_end.tv_nsec / 1000000000.0);
-			sect->elapsed_time += time_end - time_start;
+			sect->elapsed_time += time_end - time_begin;
 			sect->num_rounds++;
 			section_found = 1;
 			break;
@@ -61,7 +61,7 @@ void eval_end(const char *title)
 
 	if (!section_found)
 	{
-		printf("Error: Section %s has no start!\n", title);
+		printf("Error: Section %s has no begin!\n", title);
 	}
 }
 

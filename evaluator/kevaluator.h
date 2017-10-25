@@ -13,7 +13,7 @@ extern "C"
 #define MIN_NSEC_THRSHLD 256
 
 
-void eval_start(const char *name);
+void eval_begin(const char *name);
 void eval_end(const char *name);
 void eval_dump(void);
 
@@ -21,7 +21,7 @@ struct section
 {
 	char title[MAX_TITLE_LENGTH];
 	int num_rounds;
-	struct timespec ts_start;
+	struct timespec ts_begin;
 	struct timespec ts_end;
 	unsigned long elapsed_time;
 };
