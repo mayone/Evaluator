@@ -11,7 +11,7 @@ extern "C"
 
 #define MAX_TITLE_LENGTH 32
 #define MAX_NUM_SECTIONS 32
-#define MIN_MSEC_THRSHLD 16
+#define MIN_NSEC_THRSHLD 256
 
 
 void eval_start(const char *name);
@@ -24,8 +24,8 @@ struct section
 {
 	char title[MAX_TITLE_LENGTH];
 	int num_rounds;
-	struct timespec tms_start;
-	struct timespec tms_end;
+	struct timespec ts_start;
+	struct timespec ts_end;
 	unsigned long elapsed_time;
 };
 

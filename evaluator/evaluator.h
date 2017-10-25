@@ -22,8 +22,8 @@ struct section
 {
 	char title[MAX_TITLE_LENGTH];
 	int num_rounds;
-	struct timespec tms_start;
-	struct timespec tms_end;
+	struct timespec ts_start;
+	struct timespec ts_end;
 	double elapsed_time;
 };
 

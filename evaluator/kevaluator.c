@@ -20,7 +20,7 @@ void eval_start(const char *title)
 		if (strcmp(title, sect->title) == 0)
 		{
 			section_found = 1;
-			sect->tms_start = current_kernel_time();
+			getnstimeofday(&sect->ts_start);
 			break;
 		}
 	}
@@ -30,15 +30,15 @@ void eval_start(const char *title)
 		i = evaluator.num_sections++;
 		sect = &evaluator.sections[i];
 		strcpy(sect->title, title);
-		sect->tms_start = current_kernel_time();
+		getnstimeofday(&sect->ts_start);
 	}
 }
 
 void eval_end(const char *title)
 {
 	int i, n, section_found;
-	unsigned long start, end;
-	long diff;
+	struct timespec ts_diff;
+	unsigned long time_diff;
 	struct section *sect;
 
 	section_found = 0;
@@ -49,16 +49,13 @@ void eval_end(const char *title)
 		sect = &evaluator.sections[i];
 		if (strcmp(title, sect->title) == 0)
 		{
-			sect->tms_end = current_kernel_time();
-			start = sect->tms_start.tv_sec * 1000000 + sect->tms_start.tv_nsec / 1000000;
-			//printk("start: %lu\n", start);
-			end = sect->tms_end.tv_sec * 1000000 + sect->tms_end.tv_nsec / 1000000;
-			//printk("end: %lu\n", end);
-			diff = (long)end - (long)start;
-			if (diff > MIN_MSEC_THRSHLD)
+			getnstimeofday(&sect->ts_end);
+			ts_diff = timespec_sub(sect->ts_end, sect->ts_start);
+			time_diff = ts_diff.tv_sec * 1000000000 + ts_diff.tv_nsec;
+			if (time_diff > MIN_NSEC_THRSHLD)
 			{
 				sect->num_rounds++;
-				sect->elapsed_time += diff;
+				sect->elapsed_time += time_diff;
 			}
 			section_found = 1;
 			break;
@@ -80,10 +77,13 @@ void eval_dump(void)
 	for (i = 0; i < n; i++)
 	{
 		sect = &evaluator.sections[i];
-		printk("==========================================\n");
-		printk("Section title:\t\t%s\n", sect->title);
-		printk("Number of rounds:\t\t%d\n", sect->num_rounds);
-		printk("Total elapsed time:\t%lu msec\n", sect->elapsed_time);
-		printk("Average time per round:\t%lu msec\n", sect->elapsed_time / sect->num_rounds);
+		if (sect->num_rounds > 0)
+		{
+			printk("==========================================\n");
+			printk("Section title:\t\t%s\n", sect->title);
+			printk("Number of rounds:\t\t%d\n", sect->num_rounds);
+			printk("Total elapsed time:\t%lu nsec\n", sect->elapsed_time);
+			printk("Average time per round:\t%lu nsec\n", sect->elapsed_time / sect->num_rounds);
+		}
 	}
 }

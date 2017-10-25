@@ -34,6 +34,8 @@ static int __init hello_world_init(void)
 {
 	printk(KERN_INFO "Hello World.\n");
 	eval_start("Hello World");
+	eval_start("Do nothing");
+	eval_end("Do nothing");
 
 	return 0;
 }
