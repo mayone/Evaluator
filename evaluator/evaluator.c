@@ -38,6 +38,7 @@ void eval_start(const char *title)
 void eval_end(const char *title)
 {
 	int i, n, section_found;
+	double time_start, time_end;
 	struct section *sect;
 
 	section_found = 0;
@@ -49,9 +50,9 @@ void eval_end(const char *title)
 		if (strcmp(title, sect->title) == 0)
 		{
 			clock_gettime(CLOCK_REALTIME, &sect->ts_end);
-			double start = sect->ts_start.tv_sec + (sect->ts_start.tv_nsec / 1000000000.0);
-			double end = sect->ts_end.tv_sec + (sect->ts_end.tv_nsec / 1000000000.0);
-			sect->elapsed_time += end - start;
+			time_start = sect->ts_start.tv_sec + (sect->ts_start.tv_nsec / 1000000000.0);
+			time_end = sect->ts_end.tv_sec + (sect->ts_end.tv_nsec / 1000000000.0);
+			sect->elapsed_time += time_end - time_start;
 			sect->num_rounds++;
 			section_found = 1;
 			break;
@@ -74,6 +75,7 @@ void eval_dump(void)
 	{
 		return;
 	}
+
 	printf("==========================================\n");
 	printf("Number of sections\t%d\n", n);
 	for (i = 0; i < n; i++)

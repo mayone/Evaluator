@@ -7,7 +7,6 @@ extern "C"
 #endif /* __cplusplus */
 
 #include <linux/ktime.h>
-//#include <linux/timekeeping.h>
 
 #define MAX_TITLE_LENGTH 32
 #define MAX_NUM_SECTIONS 32
@@ -15,9 +14,7 @@ extern "C"
 
 
 void eval_start(const char *name);
-
 void eval_end(const char *name);
-
 void eval_dump(void);
 
 struct section

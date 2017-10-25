@@ -78,6 +78,7 @@ void eval_dump(void)
 	{
 		return;
 	}
+
 	printk("==========================================\n");
 	printk("Number of sections:\t%d\n", n);
 	for (i = 0; i < n; i++)
