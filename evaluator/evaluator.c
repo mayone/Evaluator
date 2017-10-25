@@ -70,10 +70,16 @@ void eval_dump(void)
 	struct section *sect;
 
 	n = evaluator.num_sections;
+	if (n == 0)
+	{
+		return;
+	}
+	printf("==========================================\n");
+	printf("Number of sections\t%d\n", n);
 	for (i = 0; i < n; i++)
 	{
 		sect = &evaluator.sections[i];
-		printf("==========================================\n");
+		printf("------------------------------------------\n");
 		printf("Section title:\t\t%s\n", sect->title);
 		printf("Number of rounds:\t%d\n", sect->num_rounds);
 		printf("Total elapsed time:\t%.9lf second\n", sect->elapsed_time);

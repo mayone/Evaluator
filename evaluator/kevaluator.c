@@ -74,12 +74,18 @@ void eval_dump(void)
 	struct section *sect;
 
 	n = evaluator.num_sections;
+	if (n == 0)
+	{
+		return;
+	}
+	printk("==========================================\n");
+	printk("Number of sections:\t%d\n", n);
 	for (i = 0; i < n; i++)
 	{
 		sect = &evaluator.sections[i];
 		if (sect->num_rounds > 0)
 		{
-			printk("==========================================\n");
+			printk("------------------------------------------\n");
 			printk("Section title:\t\t%s\n", sect->title);
 			printk("Number of rounds:\t\t%d\n", sect->num_rounds);
 			printk("Total elapsed time:\t%lu nsec\n", sect->elapsed_time);
