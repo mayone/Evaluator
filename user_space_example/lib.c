@@ -3,7 +3,7 @@
 
 void helloWorld()
 {
-	eval_start("Hello World");
+	eval_begin("Hello World");
 	int hello = 123;
 	eval_end("Hello World");
 }
