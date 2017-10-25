@@ -4,6 +4,9 @@
 
 #include "evaluator.h"
 
+
+struct _evaluator evaluator;
+
 void eval_start(const char *title)
 {
 	int i, n, section_found;

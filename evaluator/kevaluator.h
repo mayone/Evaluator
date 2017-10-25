@@ -1,15 +1,18 @@
-#ifndef __EVALUATOR_H__
-#define __EVALUATOR_H__
+#ifndef __KEVALUATOR_H__
+#define __KEVALUATOR_H__
 
 #ifdef  __cplusplus
 extern "C"
 {
 #endif /* __cplusplus */
 
-#include <time.h>
+#include <linux/ktime.h>
+//#include <linux/timekeeping.h>
 
 #define MAX_TITLE_LENGTH 32
 #define MAX_NUM_SECTIONS 32
+#define MIN_MSEC_THRSHLD 16
+
 
 void eval_start(const char *name);
 
@@ -23,7 +26,7 @@ struct section
 	int num_rounds;
 	struct timespec tms_start;
 	struct timespec tms_end;
-	double elapsed_time;
+	unsigned long elapsed_time;
 };
 
 struct _evaluator
@@ -32,10 +35,11 @@ struct _evaluator
 	struct section sections[MAX_NUM_SECTIONS];
 };
 
-static struct _evaluator evaluator;
+extern struct _evaluator evaluator;
+
 
 #ifdef  __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __EVALUATOR_H__ */
+#endif /* __KEVALUATOR_H__ */

@@ -1,8 +1,13 @@
 #include <unistd.h>
+
 #include "evaluator.h"
+#include "lib.h"
+
 
 int main(int argc, char const *argv[])
 {
+	helloWorld();
+
 	eval_start("I am tired");
 	usleep(1000);
 	eval_end("I am tired");
