@@ -1,7 +1,7 @@
 CC      = gcc
-CCFLAGS = -I../evaluator
+CCFLAGS = -I../profiler
 LDFLAGS =
-SOURCES = main.c lib.c ../evaluator/evaluator.c
+SOURCES = main.c lib.c ../profiler/profiler.c
 OBJECTS = $(notdir $(SOURCES:.c=.o))
 EXECUTE = example
 

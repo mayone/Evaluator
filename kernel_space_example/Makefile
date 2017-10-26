@@ -1,5 +1,5 @@
 MODULE_NAME = example
-SRC = main.c ../evaluator/kevaluator.c
+SRC = main.c ../profiler/kprofiler.c
 
 # Define path
 PWD := $(shell pwd)
@@ -17,4 +17,4 @@ info:
 
 clean:
 	$(MAKE) -C $(KDIR_LINUX) M=$(PWD) clean
-	rm $(PWD)/../evaluator/*.o
+	rm $(PWD)/../profiler/*.o

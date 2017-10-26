@@ -1,9 +1,9 @@
 #include "lib.h"
-#include "evaluator.h"
+#include "profiler.h"
 
 void helloWorld()
 {
-	eval_begin("Hello World");
+	prof_begin("Hello World");
 	int hello = 123;
-	eval_end("Hello World");
+	prof_end("Hello World");
 }

@@ -2,22 +2,22 @@
 #include <string.h>
 #include <time.h>
 
-#include "evaluator.h"
+#include "profiler.h"
 
 
-struct _evaluator evaluator;
+struct _profiler profiler;
 
-void eval_begin(const char *title)
+void prof_begin(const char *title)
 {
 	int i, n, section_found;
 	struct section *sect;
 
 	section_found = 0;
-	n = evaluator.num_sections;
+	n = profiler.num_sections;
 
 	for (i = 0; i < n; i++)
 	{
-		sect = &evaluator.sections[i];
+		sect = &profiler.sections[i];
 		if (strcmp(title, sect->title) == 0)
 		{
 			section_found = 1;
@@ -28,25 +28,25 @@ void eval_begin(const char *title)
 
 	if (!section_found)	// New section
 	{
-		i = evaluator.num_sections++;
-		sect = &evaluator.sections[i];
+		i = profiler.num_sections++;
+		sect = &profiler.sections[i];
 		strcpy(sect->title, title);
 		clock_gettime(CLOCK_REALTIME, &sect->ts_begin);
 	}
 }
 
-void eval_end(const char *title)
+void prof_end(const char *title)
 {
 	int i, n, section_found;
 	double time_begin, time_end;
 	struct section *sect;
 
 	section_found = 0;
-	n = evaluator.num_sections;
+	n = profiler.num_sections;
 
 	for (i = 0; i < n; i++)
 	{
-		sect = &evaluator.sections[i];
+		sect = &profiler.sections[i];
 		if (strcmp(title, sect->title) == 0)
 		{
 			clock_gettime(CLOCK_REALTIME, &sect->ts_end);
@@ -65,12 +65,12 @@ void eval_end(const char *title)
 	}
 }
 
-void eval_dump(void)
+void prof_dump(void)
 {
 	int i, n;
 	struct section *sect;
 
-	n = evaluator.num_sections;
+	n = profiler.num_sections;
 	if (n == 0)
 	{
 		return;
@@ -80,7 +80,7 @@ void eval_dump(void)
 	printf("Number of sections\t%d\n", n);
 	for (i = 0; i < n; i++)
 	{
-		sect = &evaluator.sections[i];
+		sect = &profiler.sections[i];
 		printf("------------------------------------------\n");
 		printf("Section title:\t\t%s\n", sect->title);
 		printf("Number of rounds:\t%d\n", sect->num_rounds);

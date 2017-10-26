@@ -1,21 +1,20 @@
-#ifndef __KEVALUATOR_H__
-#define __KEVALUATOR_H__
+#ifndef __PROFILER_H__
+#define __PROFILER_H__
 
 #ifdef  __cplusplus
 extern "C"
 {
 #endif /* __cplusplus */
 
-#include <linux/ktime.h>
+#include <time.h>
 
 #define MAX_TITLE_LENGTH 32
 #define MAX_NUM_SECTIONS 32
-#define MIN_NSEC_THRSHLD 256
 
 
-void eval_begin(const char *name);
-void eval_end(const char *name);
-void eval_dump(void);
+void prof_begin(const char *name);
+void prof_end(const char *name);
+void prof_dump(void);
 
 struct section
 {
@@ -23,20 +22,20 @@ struct section
 	int num_rounds;
 	struct timespec ts_begin;
 	struct timespec ts_end;
-	unsigned long elapsed_time;
+	double elapsed_time;
 };
 
-struct _evaluator
+struct _profiler
 {
 	int num_sections;
 	struct section sections[MAX_NUM_SECTIONS];
 };
 
-extern struct _evaluator evaluator;
+extern struct _profiler profiler;
 
 
 #ifdef  __cplusplus
 }
 #endif /* __cplusplus */
 
-#endif /* __KEVALUATOR_H__ */
+#endif /* __PROFILER_H__ */

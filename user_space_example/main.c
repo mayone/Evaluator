@@ -1,6 +1,6 @@
 #include <unistd.h>
 
-#include "evaluator.h"
+#include "profiler.h"
 #include "lib.h"
 
 
@@ -10,18 +10,18 @@ int main(int argc, char const *argv[])
 
 	helloWorld();
 
-	eval_begin("I am tired");
+	prof_begin("I am tired");
 	usleep(1000);
-	eval_end("I am tired");
+	prof_end("I am tired");
 
 	for(i = 0; i < 2; i++)
 	{
-		eval_begin("Sleep 0.5 second");
+		prof_begin("Sleep 0.5 second");
 		usleep(500000);
-		eval_end("Sleep 0.5 second");
+		prof_end("Sleep 0.5 second");
 	}
 
-	eval_dump();
+	prof_dump();
 
 	return 0;
 }

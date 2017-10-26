@@ -5,7 +5,7 @@
 #include <linux/kernel.h>	/**< Needed for KERN_INFO */
 #include <linux/init.h>		/**< Needed for the macros */
 
-#include "../evaluator/kevaluator.h"
+#include "../profiler/kprofiler.h"
 
 #define AUTHOR "Wayne"
 #define DESC "Hello World"
@@ -33,9 +33,9 @@ MODULE_PARM_DESC(n, "An integer");
 static int __init hello_world_init(void)
 {
 	printk(KERN_INFO "Hello World.\n");
-	eval_begin("Hello World");
-	eval_begin("Do nothing");
-	eval_end("Do nothing");
+	prof_begin("Hello World");
+	prof_begin("Do nothing");
+	prof_end("Do nothing");
 
 	return 0;
 }
@@ -46,8 +46,8 @@ static int __init hello_world_init(void)
 static void __exit hello_world_exit(void)
 {
 	printk(KERN_INFO "Goodbye.\n");
-	eval_end("Hello World");
-	eval_dump();
+	prof_end("Hello World");
+	prof_dump();
 }
 
 module_init(hello_world_init);
