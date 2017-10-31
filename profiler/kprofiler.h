@@ -10,7 +10,7 @@ extern "C"
 
 #define MAX_TITLE_LENGTH 32
 #define MAX_NUM_SECTIONS 32
-#define MIN_NSEC_THRSHLD 256
+#define MIN_NSEC_THRSHLD 0
 
 
 void prof_begin(const char *name);
