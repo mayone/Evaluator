@@ -1,7 +1,6 @@
 # Profiler
----
-## Purpose
-* Measure the execution time of sections
+
+This is a C profiling tool to measure the execution time of sections
 
 ## Library
 * `profiler/profiler.h` for **user-space** program

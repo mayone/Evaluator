@@ -38,7 +38,7 @@ void prof_end(const char *title)
 {
 	int i, n, section_found;
 	struct timespec ts_diff;
-	unsigned long time_diff;
+	long time_diff;
 	struct section *sect;
 
 	section_found = 0;
