@@ -8,40 +8,35 @@ struct _profiler profiler;
 
 void prof_begin(const char *title)
 {
-	int i, n, section_found;
+	int i, n;
 	struct section *sect;
 
-	section_found = 0;
 	n = profiler.num_sections;
 
 	for (i = 0; i < n; i++)
 	{
 		sect = &profiler.sections[i];
-		if (strcmp(title, sect->title) == 0)
+		if (strcmp(title, sect->title) == 0)	// Existed section
 		{
-			section_found = 1;
 			getnstimeofday(&sect->ts_begin);
-			break;
+			return;
 		}
 	}
 
-	if (!section_found)	// New section
-	{
-		i = profiler.num_sections++;
-		sect = &profiler.sections[i];
-		strcpy(sect->title, title);
-		getnstimeofday(&sect->ts_begin);
-	}
+	// New section
+	i = profiler.num_sections++;
+	sect = &profiler.sections[i];
+	strcpy(sect->title, title);
+	getnstimeofday(&sect->ts_begin);
 }
 
 void prof_end(const char *title)
 {
-	int i, n, section_found;
+	int i, n;
 	struct timespec ts_diff;
 	long time_diff;
 	struct section *sect;
 
-	section_found = 0;
 	n = profiler.num_sections;
 
 	for (i = 0; i < n; i++)
@@ -57,15 +52,12 @@ void prof_end(const char *title)
 				sect->num_rounds++;
 				sect->elapsed_time += time_diff;
 			}
-			section_found = 1;
-			break;
+			return;
 		}
 	}
 
-	if (!section_found)
-	{
-		printk("Error: Section %s has no begin!\n", title);
-	}
+	// Section doesn't begin
+	printk("Error: Section %s has no begin!\n", title);
 }
 
 void prof_dump(void)
