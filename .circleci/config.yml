@@ -44,11 +44,13 @@ jobs:
                     apt-get install make
                     apt-get install zip -y
             - run: |
-                    cd user_space_example
-                    make all
+                cd user_space_example
+                make all
             - run:
                 name: Run user space program
-                command: make run
+                command: |
+                    cd user_space_example
+                    make run
 
 workflows:
     version: 2
