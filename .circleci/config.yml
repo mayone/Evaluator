@@ -28,14 +28,9 @@ jobs:
                 name: Compiler Version
                 command: gcc -v
             - run:
-                name: Compile (Kernel space)
-                command: |
-                    cd kernel_space_example
-                    make all
-            - run:
                 name: Compile (User space)
                 command: |
-                    cd ../user_space_example
+                    cd user_space_example
                     make all
     test:
         <<: *environment
@@ -48,6 +43,12 @@ jobs:
                     apt-get install gcc -y
                     apt-get install make
                     apt-get install zip -y
+            - run: |
+                    cd user_space_example
+                    make all
+            - run:
+                name: Run user space program
+                command: make run
 
 workflows:
     version: 2
