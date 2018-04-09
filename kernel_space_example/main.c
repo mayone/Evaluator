@@ -7,8 +7,8 @@
 
 #include "../profiler/kprofiler.h"
 
-#define AUTHOR "Wayne"
-#define DESC "Hello World"
+#define AUTHOR	"Wayne"
+#define DESC	"Hello World"
 
 
 /**
@@ -45,9 +45,9 @@ static int __init hello_world_init(void)
  */
 static void __exit hello_world_exit(void)
 {
-	printk(KERN_INFO "Goodbye.\n");
 	prof_end("Hello World");
 	prof_dump();
+	printk(KERN_INFO "Goodbye.\n");
 }
 
 module_init(hello_world_init);

@@ -80,7 +80,7 @@ void prof_dump(void)
 		{
 			printk("------------------------------------------\n");
 			printk("Section title:\t\t%s\n", sect->title);
-			printk("Number of rounds:\t\t%d\n", sect->num_rounds);
+			printk("Number of rounds:\t%d\n", sect->num_rounds);
 			printk("Total elapsed time:\t%lu nsec\n", sect->elapsed_time);
 			printk("Average time per round:\t%lu nsec\n", sect->elapsed_time / sect->num_rounds);
 		}

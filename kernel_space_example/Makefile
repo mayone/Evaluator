@@ -1,5 +1,6 @@
 MODULE_NAME = example
-SRC = main.c ../profiler/kprofiler.c
+SRC = main.c \
+	../profiler/kprofiler.c
 
 # Define path
 PWD := $(shell pwd)
