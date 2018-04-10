@@ -1,19 +1,20 @@
 CC      = gcc
 CCFLAGS = -I../profiler
 LDFLAGS =
-SOURCES = main.c lib.c ../profiler/profiler.c
-OBJECTS = $(notdir $(SOURCES:.c=.o))
-EXECUTE = example
+SRCS = $(wildcard *.c \
+		../profiler/profiler.c)
+OBJS = $(patsubst %.c, %.o, $(SRCS))
+EXEC = example
 
-all: $(EXECUTE)
-$(EXECUTE): $(OBJECTS)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
-$(OBJECTS): $(SOURCES)
-	$(CC) $(CCFLAGS) $(SOURCES) -c
-#	$(CC) $(CCFLAGS) -c $< -o $@
+all: $(EXEC)
+
+$(EXEC): $(OBJS)
+	$(CC) $(LDFLAGS) $(OBJS) -o $@
+%.o: %.c
+	$(CC) $(CCFLAGS) -c $? -o $@
 
 run:
-	./$(EXECUTE)
+	./$(EXEC)
 
 clean:
-	rm -rf *~ $(OBJECTS) $(EXECUTE)
+	rm -rf *~ $(OBJS) $(EXEC)
