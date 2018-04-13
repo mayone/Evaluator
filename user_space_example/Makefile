@@ -1,5 +1,5 @@
 CC      = gcc
-CCFLAGS = -I../profiler
+CFLAGS += -I../profiler
 LDFLAGS =
 SRCS = $(wildcard *.c \
 		../profiler/profiler.c)
@@ -11,7 +11,7 @@ all: $(EXEC)
 $(EXEC): $(OBJS)
 	$(CC) $(LDFLAGS) $(OBJS) -o $@
 %.o: %.c
-	$(CC) $(CCFLAGS) -c $? -o $@
+	$(CC) $(CFLAGS) -c $? -o $@
 
 run:
 	./$(EXEC)
