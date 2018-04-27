@@ -11,7 +11,7 @@ $(MODULE_NAME)-objs = $(SRC:.c=.o)
 obj-m := $(MODULE_NAME).o
 
 all:
-	$(MAKE) -C $(KDIR_LINUX) M=$(PWD)  modules
+	$(MAKE) -C $(KDIR_LINUX) M=$(PWD) modules
 
 info:
 	modinfo $(obj-m:%.o=%.ko)
